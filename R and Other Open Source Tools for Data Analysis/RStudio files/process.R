@@ -37,12 +37,8 @@ library(ggplot2)
 
 #### Importing Data ####
 
-# download some data
-download.file(url = "https://raw.githubusercontent.com/resbaz/r-novice-gapminder-files/master/data/gapminder-FiveYearData.csv",
-              destfile = "gapminderdata.csv")
-
 # import the data
-gapminder <- read.csv("gapminderdata.csv")
+gapminder <- read.csv("https://raw.githubusercontent.com/resbaz/r-novice-gapminder-files/master/data/gapminder-FiveYearData.csv")
 
 # view the data
 View(gapminder)
