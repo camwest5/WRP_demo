@@ -33,6 +33,11 @@ install.packages("ggplot2")
 # when you need a package you then load it each time you open R
 library(ggplot2)
 
+# we can now use functions that come with / live inside the package
+
+# This creates a blank plot
+ggplot()
+
 
 
 #### Importing Data ####
@@ -43,6 +48,8 @@ gapminder <- read.csv("https://raw.githubusercontent.com/resbaz/r-novice-gapmind
 # view the data
 View(gapminder)
 
+# Get a summary
+summary(gapminder)
 
 
 #### Processing Data ####
@@ -56,32 +63,28 @@ australia <- filter(gapminder, country == "Australia")
 View(australia)
 
 
-
-#### Analysing Data ####
-
-# basic statistics
-summary(gapminder)
-
-# statistics of our filtered dataset
-summary(australia)
-
-
-
 #### Visualising Data ####
 
 # we already loaded visualation package ggplot2, so we don't need to load it again today
 
-# create a scatterplot
-ggplot(data = gapminder,
-       mapping = aes(x = gdpPercap,
-                     y = lifeExp)) +
-  geom_point(aes(colour = continent)) 
-
-# create a scatterplot of our filtered dataset
+# Plot the population of Australia over time
 ggplot(data = australia,
+       mapping = aes(x = year, y = pop)) +
+  geom_point()
+
+# create a scatterplot of gdpPercap vs lifeExp for all countries in 2007
+
+# Filter by 2007
+gapminder07 <- filter(gapminder, year == 2007)
+
+# Create plot
+ggplot(data = gapminder07,
        mapping = aes(x = gdpPercap,
-                     y = lifeExp)) +
-  geom_point() 
+                     y = lifeExp,
+                     colour = continent)) +
+  geom_point() +
+  xlab("GDP per capita (USD)") +
+  ylab("Life expectancy (years)")
 
 
 
@@ -92,13 +95,16 @@ install.packages("plotly")
 library(plotly)
 
 # insert our plot into a variable
-p <- ggplot(data = gapminder,
-       mapping = aes(x = gdpPercap,
-                     y = lifeExp)) +
-  geom_point(aes(colour = continent)) 
+plot_for_2007 <- ggplot(data = gapminder07,
+                        mapping = aes(x = gdpPercap,
+                                      y = lifeExp,
+                                      colour = continent)) +
+  geom_point() +
+  xlab("GDP per capita (USD)") +
+  ylab("Life expectancy (years)")
 
 # create an interactive plot
-ggplotly(p)
+ggplotly(plot_for_2007)
 
 # export the plot as a HTML file
-htmlwidgets::saveWidget(ggplotly(p), "index.html")
+htmlwidgets::saveWidget(ggplotly(plot_for_2007), "index.html")
