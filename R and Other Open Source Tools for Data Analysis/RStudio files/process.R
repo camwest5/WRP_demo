@@ -85,26 +85,3 @@ ggplot(data = gapminder07,
   geom_point() +
   xlab("GDP per capita (USD)") +
   ylab("Life expectancy (years)")
-
-
-
-#### Exporting Interactive Plots ####
-
-# install and then a package for interative plots
-install.packages("plotly")
-library(plotly)
-
-# insert our plot into a variable
-plot_for_2007 <- ggplot(data = gapminder07,
-                        mapping = aes(x = gdpPercap,
-                                      y = lifeExp,
-                                      colour = continent)) +
-  geom_point() +
-  xlab("GDP per capita (USD)") +
-  ylab("Life expectancy (years)")
-
-# create an interactive plot
-ggplotly(plot_for_2007)
-
-# export the plot as a HTML file
-htmlwidgets::saveWidget(ggplotly(plot_for_2007), "index.html")
